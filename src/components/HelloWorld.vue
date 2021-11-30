@@ -1,11 +1,22 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from "vue";
 
 defineProps({
-  msg: String
-})
+  msg: String,
+});
 
-const count = ref(0)
+const count = ref(0);
+const info = computed(() => {
+  return `hello ${count.value}`;
+});
+const onAddCount = () => {
+  count.value++;
+};
+
+onMounted(function (t) {  
+  console.log(t, this)
+}, this)
+
 </script>
 
 <template>
@@ -27,6 +38,7 @@ const count = ref(0)
   </p>
 
   <button type="button" @click="count++">count is: {{ count }}</button>
+  <h2 @click="onAddCount">{{ info }}</h2>
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
